@@ -51,8 +51,8 @@ public class MainScene : MonoBehaviour
                 objects[i].transform.position = new Vector3(n * 2, epics[i].team_id, epics[i].targetStart);
 
                 objects[i].name = "Plank " + i;
+                // objects[i].GetComponent<Renderer>().material.SetTexture();
                 objects[i].GetComponent<Renderer>().material.SetColor("_Color", epics[i].customColor);
-                ;
 
                 objects[i].AddComponent<Rigidbody>();
                 objects[i].GetComponent<Rigidbody>().mass = epics[i].targetEnd / 20.0f;
