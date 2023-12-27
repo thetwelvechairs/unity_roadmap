@@ -7,4 +7,6 @@ public class Epic
     public int targetStart = 0;
     public int targetEnd = 0;
     public Color customColor;
+
+    public float z = 0.0f;
 }

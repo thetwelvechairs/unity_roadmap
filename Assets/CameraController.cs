@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
+// using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -19,8 +19,8 @@ public class CameraController : MonoBehaviour
         transform.position += transform.right * Input.GetAxis("Horizontal") * speed * Time.deltaTime;
 
         // Honor scene bounds
-        float temp_max_x = MainScene.max_x * 10;
-        float temp_max_z = MainScene.max_z * 10;
+        float temp_max_x = MainScene.max_x;
+        float temp_max_z = MainScene.max_z;
 
         if (Camera.main.transform.position.y < camera_y_min)
         {
