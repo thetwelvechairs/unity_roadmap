@@ -4,8 +4,8 @@ using Random = UnityEngine.Random;
 
 public class MainScene : MonoBehaviour
 {
-    private const int TEST_teams = 100;
-    private const int TEST_n = 1000;
+    private const int TEST_teams = 10;
+    private const int TEST_n = 100;
 
     public const float max_x = 25.0f;
     public const float max_z = 10.0f;
@@ -38,6 +38,7 @@ public class MainScene : MonoBehaviour
     {
         plane = GameObject.CreatePrimitive(PrimitiveType.Cube);
         plane.name = "Plane 1";
+        plane.tag = "Planes";
         plane.layer = 2;
         plane.transform.position = new Vector3(1.0f, 0.0f, 0.0f);
         plane.transform.localScale = new Vector3(max_x, 0.5f, max_z);
@@ -50,6 +51,7 @@ public class MainScene : MonoBehaviour
 
         plane2 = GameObject.CreatePrimitive(PrimitiveType.Cube);
         plane2.name = "Plane 2";
+        plane2.tag = "Planes";
         plane2.layer = 2;
         plane2.transform.position = new Vector3(1.0f, 0.0f, 0.0f);
         plane2.transform.localScale = new Vector3(max_x, 0.5f, max_z);
@@ -61,6 +63,7 @@ public class MainScene : MonoBehaviour
 
         plane3 = GameObject.CreatePrimitive(PrimitiveType.Cube);
         plane3.name = "Plane 3";
+        plane3.tag = "Planes";
         plane3.layer = 2;
         plane3.transform.position = new Vector3(1.0f, 0.0f, 0.0f);
         plane3.transform.localScale = new Vector3(max_x, 0.5f, max_z);
@@ -72,35 +75,36 @@ public class MainScene : MonoBehaviour
 
     }
 
+    void setupObjects()
+    {
+        for (int i = 0; i < objects.Length; i++)
+        {
+            objects[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            objects[i].tag = "Balls";
+            objects[i].transform.position = new Vector3(0.0f, epics[i].team_id, epics[i].targetStart);
+            objects[i].transform.localScale = new Vector3(1.5f, 1.5f, 1.5f);
+
+            objects[i].name = "Ball " + i;
+
+            objects[i].GetComponent<Renderer>().material.SetColor("_Color", epics[i].customColor);
+
+            objects[i].AddComponent<Rigidbody>();
+            objects[i].GetComponent<Rigidbody>().mass = epics[i].targetEnd * 1000.0f;
+        }
+    }
+
     void Start()
     {
         setupPlane();
         setupEpics();
-
-        for (int i = 0; i < objects.Length; i++)
-            {
-                objects[i] = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                objects[i].transform.position = new Vector3(0.0f, epics[i].team_id, epics[i].targetStart);
-
-                objects[i].name = "Plank " + i;
-
-                objects[i].GetComponent<Renderer>().material.SetColor("_Color", epics[i].customColor);
-
-                objects[i].AddComponent<Rigidbody>();
-                objects[i].GetComponent<Rigidbody>().mass = epics[i].targetEnd * 1000.0f;
-            }
-    }
-
-    void Update()
-    {
-
+        setupObjects();
     }
 
     void FixedUpdate()
     {
-        plane.GetComponent<Rigidbody>().MovePosition(new Vector3(0.0f, 0.0f, 0.0f));
-        plane2.GetComponent<Rigidbody>().MovePosition(new Vector3(0.0f, 4.0f, 15.0f));
-        plane3.GetComponent<Rigidbody>().MovePosition(new Vector3(0.0f, 8.0f, 30.0f));
+        plane.GetComponent<Rigidbody>().MovePosition(new Vector3(0.0f, 0.0f, -10.0f));
+        plane2.GetComponent<Rigidbody>().MovePosition(new Vector3(0.0f, 4.0f, 0.0f));
+        plane3.GetComponent<Rigidbody>().MovePosition(new Vector3(0.0f, 8.0f, 10.0f));
         plane.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(100.0f * (Time.time), +0.0f, 0.0f));
         plane2.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(-100.0f * (Time.time), +0.0f, 0.0f));
         plane3.GetComponent<Rigidbody>().MoveRotation(Quaternion.Euler(100.0f * (Time.time), +0.0f, 0.0f));
